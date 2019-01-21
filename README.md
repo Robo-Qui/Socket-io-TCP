@@ -1,12 +1,21 @@
 # Squelette du TP
 
+## Utilisation
+
+Pour utiliser ce tp vous devez le forker via le lien fork ci-dessus {:# code-fork }
+
+Votre repository doit être **privé**. Vous devez le partager avec votre encadrant de TP.
+
+
+## Rapport 
+
 Votre rapport doit être écrit ici en markdown.
 
 Vous trouverez la syntaxe de markdown ici : https://docs.gitlab.com/ee/user/markdown.html
 
 Placez vos images dans le répertoire images si nécessaire.
 
-Votre repository doit être **privé**. Vous devez le partager avec votre encadrant de TP.
+
 
 ## Faire des diagrammes 
 
