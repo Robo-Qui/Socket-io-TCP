@@ -2,7 +2,7 @@
 
 ## Utilisation
 
-Pour utiliser ce tp vous devez le forker via le lien fork ci-dessus <i class="fas  fa-code-fork" aria-hidden="true">
+Pour utiliser ce tp vous devez le forker via le lien fork ci-dessus.
 
 Votre repository doit être **privé**. Vous devez le partager avec votre encadrant de TP.
 
