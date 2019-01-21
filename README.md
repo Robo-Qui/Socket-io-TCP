@@ -2,9 +2,19 @@
 
 ## Utilisation
 
-Pour utiliser ce tp vous devez le forker via le lien fork ci-dessus.
+Pour utiliser ce tp vous devez :
 
-Votre repository doit être **privé**. Vous devez le partager avec votre encadrant de TP.
+1. le forker via le lien fork ci-dessus.
+2. Votre repository doit être **privé**. Vous devez le partager avec votre encadrant de TP.
+3. vous obtiendrez un nouveau lien : par exemple git@gitlab.istic.univ-rennes1.fr:monpseudo/tp1.http.git
+4. Dans le **workspace d'eclipse** faites `git clone git@gitlab.istic.univ-rennes1.fr:monpseudo/tp1.http.git` avec l'url précédente.
+5. Ouvrez le workspace dans eclipse. 
+6. Utilisez Import> "Existing Maven Projects".
+7. Selectionnez le projet et validez.
+
+Vous devriez avoir une version du projet dans votre propre compte gitlab.
+
+Vous pouvez le partager avec votre binome et l'encadrant de TP.
 
 
 ## Rapport 
