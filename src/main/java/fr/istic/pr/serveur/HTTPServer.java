@@ -38,7 +38,7 @@ public class HTTPServer {
                 Executor service = Executors.newFixedThreadPool(4);
 
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Client " + clientSocket.getInetAddress() + " is connected.");
+                System.out.println(clientSocket.getInetAddress() + " : Connected.");
                 service.execute(new HTTPHandler(clientSocket));
 
             }
