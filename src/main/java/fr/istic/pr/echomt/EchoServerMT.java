@@ -1,9 +1,11 @@
-package fr.istic.pr.echo;
+package fr.istic.pr.echomt;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Class Echo server<br>
@@ -11,10 +13,10 @@ import java.util.Scanner;
  * Use handler to answer<br>
  * The goal is to send back the message to the client (echo)
  *
- * @see ClientHandlerBytes
- * @see ClientHandlerChar
+ * @see ClientHandlerBytesMT
+ * @see ClientHandlerCharMT
  */
-public class EchoServer {
+public class EchoServerMT {
 
     /**
      * Main<br>
@@ -31,8 +33,8 @@ public class EchoServer {
         //Ask for ClientHandlerBytes or ClientHandlerChar
         Scanner sc = new Scanner(System.in);
         String sb = "Choose one :\n" +
-                "ClientHandlerBytes\t:\t0\n" +
-                "ClientHandlerChar\t:\t1\n";
+                "ClientHandlerBytesMT\t:\t0\n" +
+                "ClientHandlerCharMT\t:\t1\n";
         System.out.println(sb);
         int choice = sc.nextInt();
         if (choice != 0 && choice != 1) {
@@ -47,27 +49,24 @@ public class EchoServer {
         try {
             System.out.println("Server started.");
             while (true) {
+
+                Executor service = Executors.newFixedThreadPool(4);
+
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Client " + clientSocket.getInetAddress() + " is connected.");
 
-                ClientHandler handler;
-
                 switch (choice) {
                     case 0:
-                        handler = new ClientHandlerBytes(clientSocket);
+                        service.execute(new ClientHandlerBytesMT(clientSocket));
                         break;
                     case 1:
-                        handler = new ClientHandlerChar(clientSocket);
+                        service.execute(new ClientHandlerCharMT(clientSocket));
                         break;
                     default:
                         throw new Exception("Error picking handler.");
 
                 }
 
-                handler.handle();
-
-                clientSocket.close();
-                System.out.println("Client " + clientSocket.getInetAddress() + " is disconnected");
             }
         } catch (IOException exception) {
             System.out.println("Error :" + exception.getMessage());

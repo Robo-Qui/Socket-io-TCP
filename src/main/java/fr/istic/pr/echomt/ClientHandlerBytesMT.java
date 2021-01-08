@@ -1,4 +1,6 @@
-package fr.istic.pr.echo;
+package fr.istic.pr.echomt;
+
+import fr.istic.pr.echo.ClientHandler;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -9,7 +11,7 @@ import java.util.Arrays;
 /**
  * Handle client with a fixed byteBuffer
  */
-public class ClientHandlerBytes implements ClientHandler {
+public class ClientHandlerBytesMT implements ClientHandler, Runnable {
 
     private final Socket socket;
 
@@ -18,7 +20,7 @@ public class ClientHandlerBytes implements ClientHandler {
      *
      * @param socket, the client socket
      */
-    public ClientHandlerBytes(Socket socket) {
+    public ClientHandlerBytesMT(Socket socket) {
         this.socket = socket;
     }
 
@@ -47,11 +49,18 @@ public class ClientHandlerBytes implements ClientHandler {
                 Arrays.fill(buffer, (byte) 0);
                 //out.flush();
             }
+            this.socket.close();
+            System.out.println("Client " + this.socket.getInetAddress() + " is disconnected");
 
         } catch (Exception e) {
             System.out.println("Error :" + e.getMessage());
         }
 
 
+    }
+
+    @Override
+    public void run() {
+        handle();
     }
 }

@@ -1,6 +1,12 @@
 package fr.istic.pr.echo;
 
+/**
+ * Interface ClientHandle<br>
+ * Only contains one method to implement
+ */
 public interface ClientHandler {
-    /** La méthode handle traite le client **/
-    public void handle();
+    /**
+     * Handle client
+     **/
+    void handle();
 }
