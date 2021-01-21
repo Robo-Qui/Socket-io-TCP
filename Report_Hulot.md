@@ -195,9 +195,9 @@ service.execute(new ClientHandlerCharMT(clientSocket));
 
 - Now, we also close the client connection on the handler's side.
 
-#### Class : ClientHandlerMT
+#### Class : ClientHandlerCharMT
 
-[Click here for code.](src/main/java/fr/istic/pr/echomt/ClientHandlerMT.java)
+[Click here for code.](src/main/java/fr/istic/pr/echomt/ClientHandlerCharMT.java)
 
 The class is almost identical to ClientHandlerChar, but there's a few differences...
 
@@ -383,13 +383,13 @@ ip.addr == 216.58.213.131
 
 **Package : fr.istic.pr.serveur**
 
-**Class : HttpServer.java**
+**Class : HTTPServer.java**
 
-[Click here for code.](src/main/java/fr/istic/pr/serveur/HttpServer.java)
+[Click here for code.](src/main/java/fr/istic/pr/serveur/HTTPServer.java)
 
-**Class : HttpHandler.java**
+**Class : HTTPHandler.java**
 
-[Click here for code.](src/main/java/fr/istic/pr/serveur/HttpHandler.java)
+[Click here for code.](src/main/java/fr/istic/pr/serveur/HTTPHandler.java)
 
 **Web page**
 ![alt-text](img/chrome_P03_WebPage.png "Localhost test page")
