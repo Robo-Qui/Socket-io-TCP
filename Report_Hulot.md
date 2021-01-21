@@ -10,7 +10,7 @@
 
 #### Class : EchoServer
 
-[Click here for code.](src/main/java/fr/istic/pr/echo/EchoServer.java)
+[**Click here for code.**](src/main/java/fr/istic/pr/echo/EchoServer.java)
 
 ````
 
@@ -57,7 +57,7 @@ clientSocket.close();
 
 #### Class : ClientHandlerBytes
 
-[Click here for code.](src/main/java/fr/istic/pr/echo/ClientHandlerBytes.java)
+[**Click here for code.**](src/main/java/fr/istic/pr/echo/ClientHandlerBytes.java)
 
 First, we get the clientSocket back:
 
@@ -104,7 +104,7 @@ while (in.read(buffer) != -1) {
 
 #### Class : ClientHandlerChar
 
-[Click here for code.](src/main/java/fr/istic/pr/echo/ClientHandlerChar.java)
+[**Click here for code.**](src/main/java/fr/istic/pr/echo/ClientHandlerChar.java)
 
 ClientHandlerChar is almost the same as ClientHandlerBytes, but we're using a BufferedReader for input and a PrintWriter for output.
 
@@ -177,7 +177,7 @@ For ClientHandlerBytes :
 
 **Class : EchoServerMT**
 
-[Click here for code.](src/main/java/fr/istic/pr/echomt/EchoServerMT.java)
+[**Click here for code.**](src/main/java/fr/istic/pr/echomt/EchoServerMT.java)
 
 The class is almost identical to EchoServer, the few differences are...
 
@@ -197,7 +197,7 @@ service.execute(new ClientHandlerCharMT(clientSocket));
 
 #### Class : ClientHandlerCharMT
 
-[Click here for code.](src/main/java/fr/istic/pr/echomt/ClientHandlerCharMT.java)
+[**Click here for code.**](src/main/java/fr/istic/pr/echomt/ClientHandlerCharMT.java)
 
 The class is almost identical to ClientHandlerChar, but there's a few differences...
 
@@ -355,7 +355,7 @@ Connection: close
 **Package : fr.istic.pr.ping**
 **Class : HttpPing**
 
-[Click here for code.](src/main/java/fr/istic/pr/ping/HttpPing.java)
+[**Click here for code.**](src/main/java/fr/istic/pr/ping/HttpPing.java)
 
 **Output**
 ![alt-text](img/idea64_P02_Ex02_HttpPing.png "HttpPing console")
@@ -365,7 +365,7 @@ Connection: close
 **Package : fr.istic.pr.ping**  
 **Class : HttpsPing.java**
 
-[Click here for code.](src/main/java/fr/istic/pr/ping/HttpsPing.java)
+[**Click here for code.**](src/main/java/fr/istic/pr/ping/HttpsPing.java)
 
 ````
 
@@ -385,11 +385,11 @@ ip.addr == 216.58.213.131
 
 **Class : HTTPServer.java**
 
-[Click here for code.](src/main/java/fr/istic/pr/serveur/HTTPServer.java)
+[**Click here for code.**](src/main/java/fr/istic/pr/serveur/HTTPServer.java)
 
 **Class : HTTPHandler.java**
 
-[Click here for code.](src/main/java/fr/istic/pr/serveur/HTTPHandler.java)
+[**Click here for code.**](src/main/java/fr/istic/pr/serveur/HTTPHandler.java)
 
 **Web page**
 ![alt-text](img/chrome_P03_WebPage.png "Localhost test page")

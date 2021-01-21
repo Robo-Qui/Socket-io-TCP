@@ -1,3 +1,7 @@
+# Rapport
+
+[**Click here.**](Report_Hulot.md)
+
 # Squelette du TP
 
 ## Utilisation
@@ -8,7 +12,7 @@ Pour utiliser ce tp vous devez :
 2. Votre repository doit être **privé**. Vous devez le partager avec votre encadrant de TP.
 3. vous obtiendrez un nouveau lien : par exemple git@gitlab.istic.univ-rennes1.fr:monpseudo/tp1.http.git
 4. Dans le **workspace d'eclipse** faites `git clone git@gitlab.istic.univ-rennes1.fr:monpseudo/tp1.http.git` avec l'url précédente.
-5. Ouvrez le workspace dans eclipse. 
+5. Ouvrez le workspace dans eclipse.
 6. Utilisez Import> "Existing Maven Projects".
 7. Selectionnez le projet et validez.
 
@@ -16,8 +20,7 @@ Vous devriez avoir une version du projet dans votre propre compte gitlab.
 
 Vous pouvez le partager avec votre binome et l'encadrant de TP.
 
-
-## Rapport 
+## Rapport
 
 Votre rapport doit être écrit ici en markdown.
 
@@ -25,13 +28,9 @@ Vous trouverez la syntaxe de markdown ici : https://docs.gitlab.com/ee/user/mark
 
 Placez vos images dans le répertoire images si nécessaire.
 
-
-
-## Faire des diagrammes 
+## Faire des diagrammes
 
 En particulier vous pouvez utiliser [mermaid](https://mermaidjs.github.io/) :
-
-
 
 ```mermaid
 sequenceDiagram
@@ -47,7 +46,7 @@ sequenceDiagram
     Bob-->John: Jolly good!
 ```
 
-## Insérer du code 
+## Insérer du code
 
 Insérer du `code` :
 
