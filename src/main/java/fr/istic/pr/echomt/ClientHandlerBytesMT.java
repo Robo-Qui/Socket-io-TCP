@@ -49,6 +49,8 @@ public class ClientHandlerBytesMT implements ClientHandler, Runnable {
                 Arrays.fill(buffer, (byte) 0);
                 //out.flush();
             }
+          
+
             this.socket.close();
             System.out.println("Client " + this.socket.getInetAddress() + " is disconnected");
 

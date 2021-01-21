@@ -78,6 +78,7 @@ public class HttpPing {
         //Send
         printWriter.flush();
 
+
         // Read response
         InputStream in = socket.getInputStream();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
@@ -85,6 +86,7 @@ public class HttpPing {
         info.code = Integer.parseInt(bufferedReader.readLine().split(" ")[1]);
 
         String buffer = " ";
+
         //Skip headers
         while (bufferedReader.ready() && !buffer.equals("")) {
             buffer = bufferedReader.readLine();
@@ -95,6 +97,7 @@ public class HttpPing {
             buffer = bufferedReader.readLine();
             System.out.println(buffer);
         }
+
 
         info.time = System.currentTimeMillis() - time;
         return info;

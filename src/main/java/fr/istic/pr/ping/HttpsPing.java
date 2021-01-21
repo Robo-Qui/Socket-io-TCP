@@ -79,7 +79,7 @@ public class HttpsPing {
         printWriter.println();
         //Send
         printWriter.flush();
-
+        
         // Read response
         InputStream in = socket.getInputStream();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));

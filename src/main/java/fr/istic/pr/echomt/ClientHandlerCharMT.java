@@ -47,6 +47,7 @@ public class ClientHandlerCharMT implements ClientHandler, Runnable {
                 printWriter.flush();
             }
 
+        
             this.socket.close();
             System.out.println("Client " + this.socket.getInetAddress() + " is disconnected");
 

@@ -31,6 +31,8 @@ public class Affiche {
             while ((line = fin.readLine()) != null) {
                 System.out.println(line);
             }
+
+            fin.close();
         }
     }
 }

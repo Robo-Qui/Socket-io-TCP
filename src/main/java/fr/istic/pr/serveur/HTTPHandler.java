@@ -53,13 +53,13 @@ public class HTTPHandler implements ClientHandler, Runnable {
                     this.doError(printWriter);
                 }
             }
-
-
+            
             this.socket.close();
             System.out.println(this.socket.getInetAddress() + " : Disconnected.");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
     }
 

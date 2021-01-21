@@ -47,11 +47,10 @@ public class ClientHandlerBytes implements ClientHandler {
                 Arrays.fill(buffer, (byte) 0);
                 //out.flush();
             }
+    
 
         } catch (Exception e) {
             System.out.println("Error :" + e.getMessage());
         }
-
-
     }
 }

@@ -43,10 +43,9 @@ public class ClientHandlerChar implements ClientHandler {
                 printWriter.flush();
             }
 
+
         } catch (Exception e) {
             System.out.println("Error :" + e.getMessage());
         }
-
-
     }
 }
