@@ -1,5 +1,7 @@
 # Rapport
 
+Le rapport est disponible dans le fichier **Report_Hulot.md**.
+
 [**Click here.**](Report_Hulot.md)
 
 # Squelette du TP
