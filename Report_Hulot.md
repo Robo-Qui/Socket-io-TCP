@@ -10,94 +10,9 @@
 
 #### Class : EchoServer
 
-[Click here](src/main/java/fr/istic/pr/echo/EchoServer.java)
+[Click here for code.](src/main/java/fr/istic/pr/echo/EchoServer.java)
 
-```java
-package fr.istic.pr.echo;
-
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.Scanner;
-
-/**
- * Class Echo server<br>
- * Accept connections on 8080<br>
- * Use handler to answer<br>
- * The goal is to send back the message to the client (echo)
- *
- * @see ClientHandlerBytes
- * @see ClientHandlerChar
- */
-public class EchoServer {
-
-    /**
-     * Main<br>
-     * Choose a type of handler and wait connections
-     *
-     * @param args _
-     * @throws IOException if socket can't be opened
-     */
-    public static void main(String[] args) throws Exception {
-        //Waiting on port 8080
-        int listeningPort = 8080;
-        ServerSocket serverSocket = new ServerSocket(listeningPort);
-
-        //Ask for ClientHandlerBytes or ClientHandlerChar
-        Scanner sc = new Scanner(System.in);
-        String sb = "Choose one :\n" +
-                "ClientHandlerBytes\t:\t0\n" +
-                "ClientHandlerChar\t:\t1\n";
-        System.out.println(sb);
-        int choice = sc.nextInt();
-        if (choice != 0 && choice != 1) {
-            throw new Exception("This handler doesn't exist.");
-        }
-
-        /* For each client :
-            1. accept connection
-            2. create ClientHandler
-            3. call method handle() on handler
-        */
-        try {
-            System.out.println("Server started.");
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("Client " + clientSocket.getInetAddress() + " is connected.");
-
-                ClientHandler handler;
-
-                switch (choice) {
-                    case 0:
-                        handler = new ClientHandlerBytes(clientSocket);
-                        break;
-                    case 1:
-                        handler = new ClientHandlerChar(clientSocket);
-                        break;
-                    default:
-                        throw new Exception("Error picking handler.");
-
-                }
-
-                handler.handle();
-
-                clientSocket.close();
-                System.out.println("Client " + clientSocket.getInetAddress() + " is disconnected");
-            }
-        } catch (IOException exception) {
-            System.out.println("Error :" + exception.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            serverSocket.close();
-            System.out.println("Server closed.");
-
-        }
-
-
-    }
-}
-```
+````
 
 We...
 
@@ -106,7 +21,7 @@ We...
 ```java
 int listeningPort = 8080;
 ServerSocket serverSocket = new ServerSocket(listeningPort);
-```
+````
 
 - Accept a connection with :
 
@@ -142,63 +57,7 @@ clientSocket.close();
 
 #### Class : ClientHandlerBytes
 
-```java
-package fr.istic.pr.echo;
-
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-
-/**
- * Handle client with a fixed byteBuffer
- */
-public class ClientHandlerBytes implements ClientHandler {
-
-    private final Socket socket;
-
-    /**
-     * Constructor
-     *
-     * @param socket, the client socket
-     */
-    public ClientHandlerBytes(Socket socket) {
-        this.socket = socket;
-    }
-
-    public void handle() {
-        try {
-            //Init input
-            System.out.println("Handler started for " + this.socket.getInetAddress() + ".");
-            InputStream in = this.socket.getInputStream();
-
-            //Init buffer
-            byte[] buffer = new byte[8];
-
-            //Init output
-            OutputStream out = this.socket.getOutputStream();
-
-            //Read message in byte buffer
-            while (in.read(buffer) != -1) {
-                //Send buffer
-                out.write(buffer);
-
-                //Print in console for log
-                String s = new String(buffer, StandardCharsets.UTF_8);
-                System.out.println("Handler for " + this.socket.getInetAddress() + " wrote " + s);
-
-                //Empty buffer for next loop
-                Arrays.fill(buffer, (byte) 0);
-                //out.flush();
-            }
-
-        } catch (Exception e) {
-            System.out.println("Error :" + e.getMessage());
-        }
-    }
-}
-```
+[Click here for code.](src/main/java/fr/istic/pr/echo/ClientHandlerBytes.java)
 
 First, we get the clientSocket back:
 
@@ -245,59 +104,7 @@ while (in.read(buffer) != -1) {
 
 #### Class : ClientHandlerChar
 
-```java
-package fr.istic.pr.echo;
-
-import java.io.*;
-import java.net.Socket;
-
-/**
- * Handle client with a BufferedReader & PrintWriter
- */
-public class ClientHandlerChar implements ClientHandler {
-
-    private final Socket socket;
-
-    /**
-     * Constructor
-     *
-     * @param socket, the client socket
-     */
-    public ClientHandlerChar(Socket socket) {
-        this.socket = socket;
-    }
-
-    public void handle() {
-        try {
-            System.out.println("Handler started for " + this.socket.getInetAddress() + ".");
-
-            //Init input
-            InputStream in = this.socket.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
-
-            //Init line buffer
-            String thisLine;
-
-            //Init output
-            OutputStream out = this.socket.getOutputStream();
-            PrintWriter printWriter = new PrintWriter(out);
-
-            while ((thisLine = bufferedReader.readLine()) != null) {
-                //Log
-                printWriter.println(thisLine);
-                System.out.println("Handler for " + this.socket.getInetAddress() + " wrote " + thisLine);
-
-                //Send line
-                printWriter.flush();
-            }
-
-        } catch (Exception e) {
-            System.out.println("Error :" + e.getMessage());
-        }
-    }
-}
-
-```
+[Click here for code.](src/main/java/fr/istic/pr/echo/ClientHandlerChar.java)
 
 ClientHandlerChar is almost the same as ClientHandlerBytes, but we're using a BufferedReader for input and a PrintWriter for output.
 
@@ -368,93 +175,9 @@ For ClientHandlerBytes :
 
 **Package : fr.istic.pr.echomt**
 
-Class : EchoServerMT
+**Class : EchoServerMT**
 
-```java
-package fr.istic.pr.echomt;
-
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.Scanner;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
-/**
- * Class Echo server<br>
- * Accept connections on 8080<br>
- * Use handler to answer<br>
- * The goal is to send back the message to the client (echo)
- *
- * @see ClientHandlerBytesMT
- * @see ClientHandlerCharMT
- */
-public class EchoServerMT {
-
-    /**
-     * Main<br>
-     * Choose a type of handler and wait connections
-     *
-     * @param args _
-     * @throws IOException if socket can't be opened
-     */
-    public static void main(String[] args) throws Exception {
-        //Waiting on port 8080
-        int listeningPort = 8080;
-        ServerSocket serverSocket = new ServerSocket(listeningPort);
-
-        //Ask for ClientHandlerBytes or ClientHandlerChar
-        Scanner sc = new Scanner(System.in);
-        String sb = "Choose one :\n" +
-                "ClientHandlerBytesMT\t:\t0\n" +
-                "ClientHandlerCharMT\t:\t1\n";
-        System.out.println(sb);
-        int choice = sc.nextInt();
-        if (choice != 0 && choice != 1) {
-            throw new Exception("This handler doesn't exist.");
-        }
-
-        /* For each client :
-            1. accept connection
-            2. create ClientHandler
-            3. call method handle() on handler
-        */
-        try {
-            System.out.println("Server started.");
-            while (true) {
-
-                Executor service = Executors.newFixedThreadPool(4);
-
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("Client " + clientSocket.getInetAddress() + " is connected.");
-
-                switch (choice) {
-                    case 0:
-                        service.execute(new ClientHandlerBytesMT(clientSocket));
-                        break;
-                    case 1:
-                        service.execute(new ClientHandlerCharMT(clientSocket));
-                        break;
-                    default:
-                        throw new Exception("Error picking handler.");
-
-                }
-
-            }
-        } catch (IOException exception) {
-            System.out.println("Error :" + exception.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            serverSocket.close();
-            System.out.println("Server closed.");
-
-        }
-
-
-    }
-}
-```
+[Click here for code.](src/main/java/fr/istic/pr/echomt/EchoServerMT.java)
 
 The class is almost identical to EchoServer, the few differences are...
 
@@ -474,73 +197,7 @@ service.execute(new ClientHandlerCharMT(clientSocket));
 
 #### Class : ClientHandlerMT
 
-```java
-package fr.istic.pr.echomt;
-
-import fr.istic.pr.echo.ClientHandler;
-
-import java.io.*;
-import java.net.Socket;
-
-/**
- * Handle client with a BufferedReader & PrintWriter
- */
-public class ClientHandlerCharMT implements ClientHandler, Runnable {
-
-    private final Socket socket;
-
-    /**
-     * Constructor
-     *
-     * @param socket, the client socket
-     */
-    public ClientHandlerCharMT(Socket socket) {
-        this.socket = socket;
-    }
-
-
-    @Override
-    public void handle() {
-        try {
-            System.out.println("Handler started for " + this.socket.getInetAddress() + ".");
-
-            //Init input
-            InputStream in = this.socket.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
-
-            //Init line buffer
-            String thisLine;
-
-            //Init output
-            OutputStream out = this.socket.getOutputStream();
-            PrintWriter printWriter = new PrintWriter(out);
-
-            while ((thisLine = bufferedReader.readLine()) != null) {
-                //Log
-                printWriter.println(thisLine);
-                System.out.println("Handler for " + this.socket.getInetAddress() + " wrote " + thisLine);
-
-                //Send line
-                printWriter.flush();
-            }
-
-            this.socket.close();
-            System.out.println("Client " + this.socket.getInetAddress() + " is disconnected");
-
-
-        } catch (Exception e) {
-            System.out.println("Error :" + e.getMessage());
-        }
-
-
-    }
-
-    @Override
-    public void run() {
-        handle();
-    }
-}
-```
+[Click here for code.](src/main/java/fr/istic/pr/echomt/ClientHandlerMT.java)
 
 The class is almost identical to ClientHandlerChar, but there's a few differences...
 
@@ -698,112 +355,7 @@ Connection: close
 **Package : fr.istic.pr.ping**
 **Class : HttpPing**
 
-```java
-package fr.istic.pr.ping;
-
-import java.io.*;
-import java.net.Socket;
-import java.net.UnknownHostException;
-import java.nio.charset.StandardCharsets;
-
-/**
- * Class HttpPing<br>
- * Show :<br>
- * - Response time<br>
- * - Response Code<br>
- * - Body
- */
-public class HttpPing {
-
-    /**
-     * Inner class, contains information of the response
-     */
-    public static class PingInfo {
-        /**
-         * Response time
-         */
-        long time;
-        /**
-         * Response code
-         */
-        int code;
-
-        @Override
-        public String toString() {
-            return String.format("[code %d -- %d ms]", code, time);
-        }
-    }
-
-    /**
-     * Main
-     *
-     * @param args _
-     * @throws UnknownHostException, host is not found
-     * @throws IOException,          exception for ping() function
-     */
-    public static void main(String[] args) throws UnknownHostException, IOException {
-        System.out.println(ping("www.example.com", 80));
-    }
-
-    /**
-     * ping method, ping a specific host/port
-     *
-     * @param host, host address
-     * @param port, host port
-     * @return PingInfo, object that contains info about the response
-     * @throws UnknownHostException, host not found
-     * @throws IOException,          exception for Socket
-     */
-    public static PingInfo ping(String host, int port) throws UnknownHostException, IOException {
-        //Create object to return
-        PingInfo info = new PingInfo();
-
-        //Start timer
-        long time = System.currentTimeMillis();
-
-        //Create socket to connect to host
-        Socket socket = new Socket(host, port);
-
-        // USE PrintWriter and BufferedReader
-        OutputStream out = socket.getOutputStream();
-        PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
-        printWriter.println();
-        /// Send headers
-        printWriter.println("GET / HTTP/1.1");
-        // Also put host
-        printWriter.println("Host : " + host);
-        // Header should also contains this to ask the website to close connection after response
-        printWriter.println("Connection: close");
-        // end with empty line
-        printWriter.println();
-        //Send
-        printWriter.flush();
-
-        // Read response
-        InputStream in = socket.getInputStream();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
-
-        info.code = Integer.parseInt(bufferedReader.readLine().split(" ")[1]);
-
-        String buffer = " ";
-        //Skip headers
-        while (bufferedReader.ready() && !buffer.equals("")) {
-            buffer = bufferedReader.readLine();
-        }
-
-        //Print page
-        while (bufferedReader.ready()) {
-            buffer = bufferedReader.readLine();
-            System.out.println(buffer);
-        }
-
-        info.time = System.currentTimeMillis() - time;
-        return info;
-    }
-
-}
-
-```
+[Click here for code.](src/main/java/fr/istic/pr/ping/HttpPing.java)
 
 **Output**
 ![alt-text](img/idea64_P02_Ex02_HttpPing.png "HttpPing console")
@@ -813,121 +365,16 @@ public class HttpPing {
 **Package : fr.istic.pr.ping**  
 **Class : HttpsPing.java**
 
-```java
-package fr.istic.pr.ping;
+[Click here for code.](src/main/java/fr/istic/pr/ping/HttpsPing.java)
 
-import javax.net.ssl.SSLSocketFactory;
-import java.io.*;
-import java.net.Socket;
-import java.net.UnknownHostException;
-import java.nio.charset.StandardCharsets;
+````
 
-/**
- * Class HttpsPing<br>
- * Show :<br>
- * - Response time<br>
- * - Response Code<br>
- * - Body
- */
-public class HttpsPing {
-
-    /**
-     * Inner class, contains information of the response
-     */
-    public static class PingInfo {
-        /**
-         * Response time
-         */
-        long time;
-        /**
-         * Response code
-         */
-        int code;
-
-        @Override
-        public String toString() {
-            return String.format("[code %d -- %d ms]", code, time);
-        }
-    }
-
-    /**
-     * Main
-     *
-     * @param args _
-     * @throws UnknownHostException, host is not found
-     * @throws IOException,          exception for ping() function
-     */
-    public static void main(String[] args) throws UnknownHostException, IOException {
-        System.out.println(ping("www.google.fr", 443));
-    }
-
-    /**
-     * ping method, ping a specific host/port
-     *
-     * @param host, host address
-     * @param port, host port
-     * @return PingInfo, object that contains info about the response
-     * @throws UnknownHostException, host not found
-     * @throws IOException,          exception for Socket
-     */
-    public static PingInfo ping(String host, int port) throws UnknownHostException, IOException {
-        //Create object to return
-        PingInfo info = new PingInfo();
-
-        //Start timer
-        long time = System.currentTimeMillis();
-
-        //Create socket to connect to host
-        SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-        Socket socket = factory.createSocket(host, port);
-
-        // USE PrintWriter and BufferedReader
-        OutputStream out = socket.getOutputStream();
-        PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
-        printWriter.println();
-        /// Send headers
-        printWriter.println("GET / HTTP/1.1");
-        // Also put host
-        printWriter.println("Host : " + host);
-        // Header should also contains this to ask the website to close connection after response
-        printWriter.println("Connection: close");
-        // end with empty line
-        printWriter.println();
-        //Send
-        printWriter.flush();
-
-        // Read response
-        InputStream in = socket.getInputStream();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
-
-        info.code = Integer.parseInt(bufferedReader.readLine().split(" ")[1]);
-
-        String buffer = " ";
-        //Skip headers
-        while (bufferedReader.ready() && !buffer.equals("")) {
-            buffer = bufferedReader.readLine();
-        }
-
-        //Print page
-        while (bufferedReader.ready()) {
-            buffer = bufferedReader.readLine();
-            System.out.println(buffer);
-        }
-
-        info.time = System.currentTimeMillis() - time;
-        return info;
-    }
-
-}
-
-```
-
-**Wireshark**  
+**Wireshark**
 Filter used :
 
 ```sh
 ip.addr == 216.58.213.131
-```
+````
 
 **Exchange is encrypted.**
 ![alt-text](img/Wireshark_P02_Ex04_SSL.png "Wireshard exchange capture")
@@ -938,197 +385,11 @@ ip.addr == 216.58.213.131
 
 **Class : HttpServer.java**
 
-```java
-package fr.istic.pr.serveur;
-
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
-/**
- * Class HTTP server<br>
- * Accept connections on 8080<br>
- * Use handler to answer<br>
- * The goal is to send back the test.html page to the client
- */
-public class HTTPServer {
-
-    /**
-     * Main<br>
-     * Choose a type of handler and wait connections
-     *
-     * @param args _
-     * @throws IOException if socket can't be opened
-     */
-    public static void main(String[] args) throws Exception {
-        //Waiting on port 8080
-        int listeningPort = 8080;
-        ServerSocket serverSocket = new ServerSocket(listeningPort);
-
-        /* For each client :
-            1. accept connection
-            2. create ClientHandler
-            3. call method handle() on handler
-        */
-        try {
-            System.out.println("Server started.");
-            while (true) {
-
-                Executor service = Executors.newFixedThreadPool(4);
-
-                Socket clientSocket = serverSocket.accept();
-                System.out.println(clientSocket.getInetAddress() + " : Connected.");
-                service.execute(new HTTPHandler(clientSocket));
-
-            }
-        } catch (IOException exception) {
-            System.out.println("Error :" + exception.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            serverSocket.close();
-            System.out.println("Server closed.");
-
-        }
-
-
-    }
-}
-```
+[Click here for code.](src/main/java/fr/istic/pr/serveur/HttpServer.java)
 
 **Class : HttpHandler.java**
 
-```java
-package fr.istic.pr.serveur;
-
-/*imports*/
-
-import fr.istic.pr.echo.ClientHandler;
-
-import java.io.*;
-import java.net.Socket;
-
-public class HTTPHandler implements ClientHandler, Runnable {
-
-    private Socket socket;
-
-    /**
-     * Constructor
-     *
-     * @param socket, the client's socket
-     */
-    public HTTPHandler(Socket socket) {
-        this.socket = socket;
-    }
-
-    @Override
-    public void handle() {
-        // Crée les print writer et buffered reader
-
-        InputStream in = null;
-        BufferedReader bufferedReader = null;
-        OutputStream out = null;
-        PrintWriter printWriter = null;
-        try {
-            //Init in
-            in = this.socket.getInputStream();
-            bufferedReader = new BufferedReader(new InputStreamReader(in));
-
-            //Init out
-            out = this.socket.getOutputStream();
-            printWriter = new PrintWriter(new OutputStreamWriter(out));
-
-
-            // lit l'entête de la requête
-            String buffer;
-            if (bufferedReader.ready()) {
-                buffer = bufferedReader.readLine();
-
-                String[] firstLine = buffer.split(" ");
-                String method = firstLine[0];
-                String pagePath = firstLine[1];
-                // Appelle doGet si la méthode est une méthode GET.
-                if (method.equals("GET")) {
-                    this.doGet(pagePath, printWriter);
-                } else {
-                    this.doError(printWriter);
-                }
-            }
-
-            this.socket.close();
-            System.out.println(this.socket.getInetAddress() + " : Disconnected.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    public void doGet(String pagepath, PrintWriter out) throws IOException {
-        //Vérifie que le fichier existe
-        //Prepare file
-        String path = pagepath.substring(1);
-        File f = new File("./www/" + path);
-
-        // si le fichier existe :
-        if (f.exists() && !f.isDirectory()) {
-            System.out.println(this.socket.getInetAddress() + " : Get file " + f.getAbsolutePath());
-            System.out.println(this.socket.getInetAddress() + " : File exist = " + f.exists());
-
-            //Ecrit l'en-tête de réponse (Code, Content-type, Connexion, ...)
-            /// Send headers
-            out.println("HTTP/1.1 200 OK");
-            out.println("Content-Type: text/html; charset=UTF-8");
-            out.println("Connection: close");
-            out.println();
-
-            //Ecrit le contenu du fichier
-            //Append page
-            BufferedReader fin = new BufferedReader(new FileReader(f));
-            String line;
-            while ((line = fin.readLine()) != null) {
-                out.println(line);
-            }
-
-            System.out.println(this.socket.getInetAddress() + " : Page " + pagepath + " served.");
-
-        } else {
-            // sinon
-            // appelle la méthode send404.
-            this.send404(out);
-        }
-
-        //Send
-        out.flush();
-
-    }
-
-    public void send404(PrintWriter out) {
-        //Envoie une réponse 404 si le fichier n'existe pas.
-        out.println("HTTP/1.1 404 Not Found");
-        out.println("Content-Type: text/html; charset=UTF-8");
-        out.println("Connection: close");
-        out.println();
-        System.out.println(this.socket.getInetAddress() + " : 404 served.");
-    }
-
-    public void doError(PrintWriter out) {
-        //Envoie une réponse avec le code 405 : Method Not Allowed
-        out.println("HTTP/1.1 405 Method Not Allowed");
-        out.println("Content-Type: text/html; charset=UTF-8");
-        out.println("Connection: close");
-        out.println();
-        System.out.println(this.socket.getInetAddress() + " : 405 served.");
-    }
-
-    @Override
-    public void run() {
-        handle();
-    }
-}
-```
+[Click here for code.](src/main/java/fr/istic/pr/serveur/HttpHandler.java)
 
 **Web page**
 ![alt-text](img/chrome_P03_WebPage.png "Localhost test page")
