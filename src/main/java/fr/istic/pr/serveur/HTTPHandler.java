@@ -54,6 +54,9 @@ public class HTTPHandler implements ClientHandler, Runnable {
                 }
             }
             
+            //Send
+            printWriter.flush();
+
             this.socket.close();
             System.out.println(this.socket.getInetAddress() + " : Disconnected.");
         } catch (IOException e) {
@@ -66,7 +69,7 @@ public class HTTPHandler implements ClientHandler, Runnable {
     public void doGet(String pagepath, PrintWriter out) throws IOException {
         //Vérifie que le fichier existe
         //Prepare file
-        String path = pagepath.substring(1);
+        String path = pagepath.substring(1); //remove slash "/"
         File f = new File("./www/" + path);
 
         // si le fichier existe :
@@ -96,9 +99,6 @@ public class HTTPHandler implements ClientHandler, Runnable {
             // appelle la méthode send404.
             this.send404(out);
         }
-
-        //Send
-        out.flush();
 
     }
 

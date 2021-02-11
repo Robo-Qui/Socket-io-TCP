@@ -38,7 +38,7 @@ public class ClientHandlerBytes implements ClientHandler {
             while (in.read(buffer) != -1) {
                 //Send buffer
                 out.write(buffer);
-
+                
                 //Print in console for log
                 String s = new String(buffer, StandardCharsets.UTF_8);
                 System.out.println("Handler for " + this.socket.getInetAddress() + " wrote " + s);
@@ -47,7 +47,7 @@ public class ClientHandlerBytes implements ClientHandler {
                 Arrays.fill(buffer, (byte) 0);
                 //out.flush();
             }
-    
+
 
         } catch (Exception e) {
             System.out.println("Error :" + e.getMessage());
